@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  odoo:
+    image: odoo16
+    container_name: odoo16
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:8069"
+      - "8072:8072"
+    volumes:
+      - ./odoo:/odoo/
+      - Odoo16:/var/lib/odoo
+  db:
+    image: postgres:12
+    container_name: odoo16_db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - Odoo16DB:/var/lib/postgresql/data
+
+volumes:
+  Odoo16:
+  Odoo16DB:
